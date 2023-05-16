@@ -1,0 +1,53 @@
+ body {
+   min-width: 320px;
+   min-height: 100vh;
+   overflow-y: auto;
+   overflow-x: hidden;
+   background-color: #333;
+ }
+
+ * {
+   box-sizing: border-box;
+   margin: 0;
+ }
+
+ a{
+  cursor: pointer;
+ }
+
+ @font-face {
+   font-family: 'Montserrat';
+   src: url('./assets/Montserrat-Regular-8.ttf');
+ }
+
+ @font-face {
+   font-family: 'Open Sans';
+   src: url('./assets/Open-Sans-2.ttf');
+ }
+
+ .font0 {
+   color: #fff;
+   font-size: 3em;
+   line-height: 30px;
+   font-weight: 700;
+   font-family: 'Montserrat', sans-serif;
+ }
+
+ .font1 {
+   font-family: 'Open Sans', sans-serif;
+   color: #fff;
+   font-weight: 400;
+ }
+
+ .font2 {
+   font-family: serif;
+   color: #fff;
+   font-size: 14px;
+   font-weight: 500;
+ }
+
+ @media screen and (max-width: 480px) {
+  .font2{
+    font-size: 14px;
+  }
+ }
