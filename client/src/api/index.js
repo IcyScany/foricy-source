@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-export const baseURL = 'http://43.139.171.246:3000'
+export const baseURL = 'https://43.139.171.246:3000'
 // export const baseURL = 'http://127.0.0.1:3000'
 
 const fetch = axios.create({
-  timeout: 30000,
+  timeout: 10000,
   baseURL: baseURL,
   headers: {
     'Cache-Control': 'no-cache',
