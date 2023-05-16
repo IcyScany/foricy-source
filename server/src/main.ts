@@ -1,11 +1,31 @@
+import * as fs from 'fs'
+import * as path from 'path'
+import * as https from 'https'
+import * as express from 'express';
+
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { join } from 'path';
-import { NestExpressApplication } from '@nestjs/platform-express';
-import { logger } from './common/logger.middleware';
+import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
+import { logger } from './common/logger.middleware'; 
 
+const port = 3000 
+// 配置https
+const httpsOptions = {
+  key: fs.readFileSync(path.join(__dirname, '../SSL/www.scany.site.key')),
+  cert: fs.readFileSync(path.join(__dirname, '../SSL/www.scany.site.crt')),
+};
+ 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const server = express()
+
+  const app = await NestFactory.create<NestExpressApplication>(
+    AppModule,
+    new ExpressAdapter(server)
+    );
+
+  // 设置logger
+  app.use(logger)
 
   // 静态资源配置
   app.useStaticAssets(join(__dirname, '../public', '/'),{
@@ -24,9 +44,11 @@ async function bootstrap() {
     "preflightContinue": false,
     "optionsSuccessStatus": 204
   })
+ 
+  await app.init()
 
-  app.use(logger)
-
-  await app.listen(3000);
+  https.createServer(httpsOptions, server).listen(port)
+  // await app.listen(port);
 }
 bootstrap();
+ 
